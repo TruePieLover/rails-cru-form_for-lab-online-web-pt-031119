@@ -1,3 +1,3 @@
 class Genre < ApplicationRecord
-  has_many :songs
-end
+    has_many :songs
+en
