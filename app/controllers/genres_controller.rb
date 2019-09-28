@@ -1,48 +1,33 @@
-class GenresController < ApplicationController 
-  
-    def new
-        new_genre
-    end 
+class GenresController < ApplicationController
+  def new
+    @genre = Genre.new
+    end
 
     def create
-        new_genre
-        update_genre
-        genre_redirect
-    end
-
-    def show
-        find_genre
-    end
-
-    def edit
-        find_genre
+      @genre = Genre.new(post_params)
+      @genre.save
+      redirect_to genre_path(@genre)
 
     end
 
     def update
-        find_genre
-        update_genre
-        genre_redirect
+
+      @genre = Genre.find(params[:id])
+      @genre.update(post_params)
+      redirect_to genre_path(@genre)
+
     end
 
-    private
-      def genre_params
-          params.require(:genre).permit(:name)
-      end
+    def edit
+      @genre = Genre.find(params[:id])
+    end
 
-      def new_genre
-          @genre = Genre.new
-      end
+    def show
+      @genre = Genre.find(params[:id])
+    end
 
-      def find_genre
-          @genre = Genre.find(params[:id])
-      end
-
-      def update_genre
-          @genre.update(genre_params)
-      end
-
-      def genre_redirect
-           redirect_to genre_path(@genre)
-      end
-end 
+  private 
+    def post_params
+      params.require(:genre).permit(:name)
+    end
+end
